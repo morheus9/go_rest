@@ -1,24 +1,34 @@
-package go_rest
+package main
 
 import (
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"log"
+	"net"
 	"net/http"
+	"time"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Welcome!\n")
-}
-
-func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+func IndexHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	name := params.ByName("name")
+	w.Write([]byte(fmt.Sprintf("Hello %s", name)))
 }
 
 func main() {
 	router := httprouter.New()
-	router.GET("/", Index)
-	router.GET("/hello/:name", Hello)
+	router.GET("/:name", IndexHandler)
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	listener, err := net.Listen("tcp", "127.0.0.1:1234")
+	if err != nil {
+		panic(err)
+	}
+	server := &http.Server{
+		Handler:      router,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	fmt.Printf("Listening on http://%s\n", listener.Addr())
+	log.Fatalln(server.Serve(listener))
+
 }
