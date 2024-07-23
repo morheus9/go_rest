@@ -10,7 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func IndexHandler(w http.ResponseWriter, _ *http.Request, params httprouter.Params) {
 	name := params.ByName("name")
 	w.Write([]byte(fmt.Sprintf("Hello %s", name)))
 }
