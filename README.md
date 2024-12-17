@@ -1,9 +1,11 @@
 # Golang rest
 ## 
 
-```GET /users 
+```
+GET /users 
 --list of users 
-200, 404, 500```
+200, 404, 500
+```
 
 ```GET /users/:id 
 --user by id 
