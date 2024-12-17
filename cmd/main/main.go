@@ -8,17 +8,20 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
+
+	"github.com/morheus9/go_rest/internal/user"
 )
 
-func IndexHandler(w http.ResponseWriter, _ *http.Request, params httprouter.Params) {
-	name := params.ByName("name")
-	w.Write([]byte(fmt.Sprintf("Hello %s", name)))
+func main() {
+	fmt.Println("create router")
+	router := httprouter.New()
+
+	handler := user.NewHandler()
+	handler.Register(router)
+	start(router)
 }
 
-func main() {
-	router := httprouter.New()
-	router.GET("/:name", IndexHandler)
-
+func start(router *httprouter.Router) {
 	listener, err := net.Listen("tcp", "127.0.0.1:1234")
 	if err != nil {
 		panic(err)
@@ -28,6 +31,7 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
+
 	fmt.Printf("Listening on http://%s\n", listener.Addr())
 	log.Fatalln(server.Serve(listener))
 
