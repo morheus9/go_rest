@@ -16,6 +16,7 @@ func main() {
 	fmt.Println("create router")
 	router := httprouter.New()
 
+	fmt.Println("register new handler")
 	handler := user.NewHandler()
 	handler.Register(router)
 	start(router)
