@@ -11,6 +11,6 @@ type Service struct {
 	logger  *logging.Logger
 }
 
-func (s *Service) Create(ctx context.Context, dto CreateUserDTO) {
-
+func (s *Service) Create(ctx context.Context, dto CreateUserDTO) (u User, err error) {
+	return
 }
