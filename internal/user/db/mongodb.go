@@ -91,12 +91,22 @@ func (d *db) Update(ctx context.Context, user user.User) error {
 	return nil
 }
 
-func (d *db) Delete(context.Context, string) error {
-	objectID, err := primitive.ObjectIDFromHex(user.ID)
+func (d *db) Delete(ctx context.Context, id string) error {
+	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return fmt.Errorf("failed to convert hex (userID) to objectID, hex %s", user.ID)
+		return fmt.Errorf("failed to convert hex (userID) to objectID, (ID:%s)", id)
 	}
 	filter := bson.M{"_id": objectID}
+
+	result, err := d.collection.DeleteOne(ctx, filter)
+	if err != nil {
+		return fmt.Errorf("failed to delete ID %s: %v", filter, err)
+	}
+	if result.DeletedCount == 0 {
+		return fmt.Errorf("not found")
+	}
+	d.logger.Tracef("Deleted %d documents", result.DeletedCount)
+	return nil
 }
 func NewStorage(database *mongo.Database, collection string, logger *logging.Logger) user.Storage {
 

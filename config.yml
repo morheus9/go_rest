@@ -4,3 +4,11 @@ listen:
   type: port # can be "sock"
   bind_ip: 127.0.0.1
   port: 10000
+mongodb:
+  host: localhost
+  port: 27017
+  database: user-service
+  auth_db:
+  username:
+  password:
+  collection: users

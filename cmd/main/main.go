@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -12,6 +13,8 @@ import (
 
 	"github.com/morheus9/go_rest/internal/config"
 	"github.com/morheus9/go_rest/internal/user"
+	"github.com/morheus9/go_rest/internal/user/db"
+	"github.com/morheus9/go_rest/pkg/client/mongodb"
 	"github.com/morheus9/go_rest/pkg/logging"
 )
 
@@ -21,6 +24,27 @@ func main() {
 	router := httprouter.New()
 
 	cfg := config.GetConfig()
+
+	cfgMongo := cfg.MongoDB
+	mongoDBClient, err := mongodb.NewClient(context.Background(), cfgMongo.Host, cfgMongo.Port, cfgMongo.Username, cfgMongo.Password, cfgMongo.Database, cfgMongo.AuthDB)
+	if err != nil {
+		panic(err)
+	}
+
+	storage := db.NewStorage(mongoDBClient, cfgMongo.Collection, logger)
+
+	user1 := user.User{
+		ID:           "",
+		Email:        "morheus12345@gmail.com",
+		Username:     "morheus12345",
+		PasswordHash: "password123",
+	}
+
+	user1ID, err := storage.Create(context.Background(), user1)
+	if err != nil {
+		panic(err)
+	}
+	logger.Info(user1ID)
 
 	logger.Info("register new handler")
 	handler := user.NewHandler(logger)
