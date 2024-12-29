@@ -1,12 +1,12 @@
 # version: '3.9'
 services:
-  pythonapp:
-    container_name: python_app
-    image: python_app
+  app:
+    container_name: app
+    image: app
     ports:
       - "8000:8000"
     networks:
-     - python_app
+     - app
     build:
       context: ../
       dockerfile: ./infra/Dockerfile
@@ -21,7 +21,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - python_app
+      - app
       - db
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
@@ -54,7 +54,7 @@ services:
       - db
 
 networks:
-  python_app:
+  app:
   db:
 
 volumes:
