@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/jackc/pgconn"
-	"github.com/morheus9/pkg/client/postgresql"
-	"github.com/morheus9/pkg/logging"
+	"github.com/morheus9/go_rest/pkg/client/postgresql"
+	"github.com/morheus9/go_rest/pkg/logging"
 
 	"restapi-lesson/internal/author"
 )

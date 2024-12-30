@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
-	author "github.com/morheus9/go_rest//internal/author/db"
 	author2 "github.com/morheus9/go_rest/internal/author"
+	author "github.com/morheus9/go_rest/internal/author/db"
 	"github.com/morheus9/go_rest/internal/config"
 	"github.com/morheus9/go_rest/pkg/client/postgresql"
 	"github.com/morheus9/go_rest/pkg/logging"

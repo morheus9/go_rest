@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-
 	"github.com/morheus9/go_rest/internal/handlers"
 	"github.com/morheus9/go_rest/pkg/logging"
 )

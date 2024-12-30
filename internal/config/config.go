@@ -1,9 +1,10 @@
 package config
 
 import (
-	"github.com/ilyakaznacheev/cleanenv"
-	"restapi-lesson/pkg/logging"
 	"sync"
+
+	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/morheus9/go_rest/pkg/logging"
 )
 
 type Config struct {
