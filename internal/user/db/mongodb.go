@@ -5,12 +5,11 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/morheus9/go_rest/internal/user"
+	"github.com/morheus9/go_rest/pkg/logging"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/v2/mongo"
-
-	"github.com/morheus9/go_rest/internal/user"
-	"github.com/morheus9/go_rest/pkg/logging"
 )
 
 type db struct {

@@ -1,10 +1,13 @@
-module github.com/morheus9/go_rest
+module restapi-lesson
 
 go 1.23.4
 
 require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0
+	github.com/jackc/pgconn v1.10.1
+	github.com/jackc/pgx/v4 v4.14.1
 	github.com/julienschmidt/httprouter v1.3.0
+	github.com/morheus9/go_rest v0.0.0-20241230151950-f0dc2cd98819
 	github.com/sirupsen/logrus v1.9.3
 	go.mongodb.org/mongo-driver v1.17.1
 	go.mongodb.org/mongo-driver/v2 v2.0.0
@@ -13,9 +16,17 @@ require (
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.2.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/jackc/pgtype v1.9.1 // indirect
+	github.com/jackc/puddle v1.2.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/montanaflynn/stats v0.7.1 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect

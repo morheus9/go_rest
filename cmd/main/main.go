@@ -7,14 +7,14 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
-
+	author "github.com/morheus9/go_rest//internal/author/db"
+	author2 "github.com/morheus9/go_rest/internal/author"
 	"github.com/morheus9/go_rest/internal/config"
-	"github.com/morheus9/go_rest/internal/user"
-	"github.com/morheus9/go_rest/internal/user/db"
-	"github.com/morheus9/go_rest/pkg/client/mongodb"
+	"github.com/morheus9/go_rest/pkg/client/postgresql"
 	"github.com/morheus9/go_rest/pkg/logging"
 )
 
@@ -25,67 +25,22 @@ func main() {
 
 	cfg := config.GetConfig()
 
-	cfgMongo := cfg.MongoDB
-	mongoDBClient, err := mongodb.NewClient(context.Background(), cfgMongo.Host, cfgMongo.Port, cfgMongo.Username, cfgMongo.Password, cfgMongo.Database, cfgMongo.AuthDB)
+	postgreSQLClient, err := postgresql.NewClient(context.TODO(), 3, cfg.Storage)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%v", err)
 	}
-
-	storage := db.NewStorage(mongoDBClient, cfgMongo.Collection, logger)
-
-	user1 := user.User{
-		ID:           "",
-		Email:        "morheue4gges12345@gmail.com",
-		Username:     "morhee4ge4gus12345",
-		PasswordHash: "passwordegeg4123",
+	repository := author.NewRepository(postgreSQLClient, logger)
+	a := author2.Author{
+		Name: "OK",
 	}
-
-	user1ID, err := storage.Create(context.Background(), user1)
+	err = repository.Create(context.TODO(), &a)
 	if err != nil {
-		panic(err)
-	}
-	logger.Info(user1ID)
-
-	user2 := user.User{
-		ID:           "",
-		Email:        "cawcawcawcawcc@gmail.com",
-		Username:     "cawacwacwacwc",
-		PasswordHash: "cawcawcacwacc",
+		logger.Fatal(err)
 	}
 
-	user2ID, err := storage.Create(context.Background(), user2)
-	if err != nil {
-		panic(err)
-	}
-	logger.Infof("ЭТА хуйня %s", user2ID)
-	fmt.Printf("ЭТА хуйня %s", user2ID)
-
-	user2Found, err := storage.FindOne(context.Background(), user2ID)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(user2Found)
-
-	user2Found.Email = "new@email.com"
-	err = storage.Update(context.Background(), user2Found)
-	if err != nil {
-		panic(err)
-	}
-
-	err = storage.Delete(context.Background(), user2ID)
-	if err != nil {
-		panic(err)
-
-	}
-
-	_, err = storage.FindOne(context.Background(), user2ID)
-	if err != nil {
-		panic(err)
-	}
-
-	logger.Info("register new handler")
-	handler := user.NewHandler(logger)
-	handler.Register(router)
+	logger.Info("register author handler")
+	authorHandler := author2.NewHandler(repository, logger)
+	authorHandler.Register(router)
 
 	start(router, cfg)
 }
@@ -98,30 +53,21 @@ func start(router *httprouter.Router, cfg *config.Config) {
 	var listenErr error
 
 	if cfg.Listen.Type == "sock" {
-		logger.Info("create socket path")
-		buildDir := path.Join("build")
-		err := os.MkdirAll(buildDir, os.ModePerm) // Создаем папку build, если она не существует
+		logger.Info("detect app path")
+		appDir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 		if err != nil {
 			logger.Fatal(err)
 		}
-
-		logger.Info("create socket in ")
-		socketPath := path.Join(buildDir, "app.sock")
+		logger.Info("create socket")
+		socketPath := path.Join(appDir, "app.sock")
 
 		logger.Info("listen unix socket")
 		listener, listenErr = net.Listen("unix", socketPath)
-		if listenErr != nil {
-			logger.Fatal(listenErr)
-		}
-		logger.Infof("server is listening on unix socket: %s", socketPath)
-
+		logger.Infof("server is listening unix socket: %s", socketPath)
 	} else {
-		logger.Info("listen tcp port")
+		logger.Info("listen tcp")
 		listener, listenErr = net.Listen("tcp", fmt.Sprintf("%s:%s", cfg.Listen.BindIP, cfg.Listen.Port))
-		if listenErr != nil {
-			logger.Fatal(listenErr)
-		}
-		logger.Infof("server is listening on http://%s:%s", cfg.Listen.BindIP, cfg.Listen.Port)
+		logger.Infof("server is listening port %s:%s", cfg.Listen.BindIP, cfg.Listen.Port)
 	}
 
 	if listenErr != nil {
@@ -135,5 +81,4 @@ func start(router *httprouter.Router, cfg *config.Config) {
 	}
 
 	logger.Fatal(server.Serve(listener))
-
 }
