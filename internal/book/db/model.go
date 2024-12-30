@@ -2,8 +2,9 @@ package db
 
 import (
 	"database/sql"
-	"restapi-lesson/internal/author"
-	"restapi-lesson/internal/book"
+
+	"github.com/morheus9/go_rest/internal/author"
+	"github.com/morheus9/go_rest/internal/book"
 )
 
 type Book struct {

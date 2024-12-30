@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/jackc/pgconn"
+
+	"github.com/morheus9/go_rest/internal/author"
 	"github.com/morheus9/go_rest/pkg/client/postgresql"
 	"github.com/morheus9/go_rest/pkg/logging"
-
-	"restapi-lesson/internal/author"
 )
 
 type repository struct {

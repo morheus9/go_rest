@@ -1,6 +1,6 @@
 package book
 
-import "restapi-lesson/internal/author"
+import "github.com/morheus9/go_rest/internal/author"
 
 type Book struct {
 	ID      string          `json:"id"`

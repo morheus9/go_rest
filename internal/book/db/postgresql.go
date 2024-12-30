@@ -2,9 +2,10 @@ package db
 
 import (
 	"context"
-	"restapi-lesson/internal/book"
-	"restapi-lesson/pkg/client/postgresql"
-	"restapi-lesson/pkg/logging"
+
+	"github.com/morheus9/go_rest/internal/book"
+	"github.com/morheus9/go_rest/pkg/client/postgresql"
+	"github.com/morheus9/go_rest/pkg/logging"
 )
 
 type repository struct {

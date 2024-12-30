@@ -1,4 +1,4 @@
-module restapi-lesson
+module github.com/morheus9/go_rest
 
 go 1.23.4
 
@@ -7,10 +7,8 @@ require (
 	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/julienschmidt/httprouter v1.3.0
-	github.com/morheus9/go_rest v0.0.0-20241230151950-f0dc2cd98819
 	github.com/sirupsen/logrus v1.9.3
 	go.mongodb.org/mongo-driver v1.17.1
-	go.mongodb.org/mongo-driver/v2 v2.0.0
 )
 
 require (

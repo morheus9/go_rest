@@ -3,13 +3,15 @@ package postgresql
 import (
 	"context"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"log"
-	"restapi-lesson/internal/config"
-	"restapi-lesson/pkg/utils"
-	"time"
+
+	"github.com/morheus9/go_rest/internal/config"
+	repeatable "github.com/morheus9/go_rest/pkg/utils"
 )
 
 type Client interface {

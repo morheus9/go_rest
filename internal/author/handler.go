@@ -3,11 +3,13 @@ package author
 import (
 	"context"
 	"encoding/json"
-	"github.com/julienschmidt/httprouter"
 	"net/http"
-	"restapi-lesson/internal/apperror"
-	"restapi-lesson/internal/handlers"
-	"restapi-lesson/pkg/logging"
+
+	"github.com/julienschmidt/httprouter"
+
+	"github.com/morheus9/go_rest/internal/apperror"
+	"github.com/morheus9/go_rest/internal/handlers"
+	"github.com/morheus9/go_rest/pkg/logging"
 )
 
 const (

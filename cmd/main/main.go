@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
+
 	author2 "github.com/morheus9/go_rest/internal/author"
 	author "github.com/morheus9/go_rest/internal/author/db"
 	"github.com/morheus9/go_rest/internal/config"
@@ -67,7 +68,7 @@ func start(router *httprouter.Router, cfg *config.Config) {
 	} else {
 		logger.Info("listen tcp")
 		listener, listenErr = net.Listen("tcp", fmt.Sprintf("%s:%s", cfg.Listen.BindIP, cfg.Listen.Port))
-		logger.Infof("server is listening port %s:%s", cfg.Listen.BindIP, cfg.Listen.Port)
+		logger.Infof("server is listening at http://%s:%s", cfg.Listen.BindIP, cfg.Listen.Port)
 	}
 
 	if listenErr != nil {

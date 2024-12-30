@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS book_authors CASCADE;
 CREATE TABLE public.author
 (
     id   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL,
+    age INT
 );
 
 CREATE TABLE public.book
