@@ -35,9 +35,9 @@ func main() {
 
 	user1 := user.User{
 		ID:           "",
-		Email:        "morheus12345@gmail.com",
-		Username:     "morheus12345",
-		PasswordHash: "password123",
+		Email:        "morheue4gges12345@gmail.com",
+		Username:     "morhee4ge4gus12345",
+		PasswordHash: "passwordegeg4123",
 	}
 
 	user1ID, err := storage.Create(context.Background(), user1)
@@ -45,6 +45,43 @@ func main() {
 		panic(err)
 	}
 	logger.Info(user1ID)
+
+	user2 := user.User{
+		ID:           "",
+		Email:        "cawcawcawcawcc@gmail.com",
+		Username:     "cawacwacwacwc",
+		PasswordHash: "cawcawcacwacc",
+	}
+
+	user2ID, err := storage.Create(context.Background(), user2)
+	if err != nil {
+		panic(err)
+	}
+	logger.Infof("ЭТА хуйня %s", user2ID)
+	fmt.Printf("ЭТА хуйня %s", user2ID)
+
+	user2Found, err := storage.FindOne(context.Background(), user2ID)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(user2Found)
+
+	user2Found.Email = "new@email.com"
+	err = storage.Update(context.Background(), user2Found)
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.Delete(context.Background(), user2ID)
+	if err != nil {
+		panic(err)
+
+	}
+
+	_, err = storage.FindOne(context.Background(), user2ID)
+	if err != nil {
+		panic(err)
+	}
 
 	logger.Info("register new handler")
 	handler := user.NewHandler(logger)
