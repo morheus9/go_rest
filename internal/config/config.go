@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/ilyakaznacheev/cleanenv"
+
 	"github.com/morheus9/go_rest/pkg/logging"
 )
 
